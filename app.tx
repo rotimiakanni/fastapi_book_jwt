@@ -1,0 +1,8 @@
+features:
+
+Create books
+View books
+Update books
+Delete books
+
+Book - id, title, description, author
