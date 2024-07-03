@@ -17,7 +17,7 @@ def signup(user: schema.UserCreate, db: Session = Depends(get_db)):
     hashed_password = pwd_context.hash(user.password)
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
-    return crud.create_user(db=db, username=user.username, hashed_password=hashed_password)
+    return crud.create_user(db=db, user=user, hashed_password=hashed_password)
 
 @app.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):

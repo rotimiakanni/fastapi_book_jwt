@@ -23,6 +23,7 @@ class UserBase(BaseModel):
     username: str
 
 class UserCreate(UserBase):
+    full_name: str
     password: str
 
 class User(UserBase):
