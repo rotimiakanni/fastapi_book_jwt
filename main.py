@@ -1,10 +1,10 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from auth import authenticate_user, create_access_token, get_current_user
-import crud, schema
-from database import engine, Base, get_db
-from auth import pwd_context
+from book_app.auth import authenticate_user, create_access_token, get_current_user
+import book_app.crud as crud, book_app.schema as schema
+from book_app.database import engine, Base, get_db
+from book_app.auth import pwd_context
 from typing import Optional
 
 Base.metadata.create_all(bind=engine)
@@ -50,12 +50,12 @@ def get_book(book_id: str, db: Session = Depends(get_db)):
 
 @app.post('/books')
 def create_book(payload: schema.BookCreate, user: schema.User = Depends(get_current_user), db: Session = Depends(get_db)):
-    crud.create_book(
+    book = crud.create_book(
         db, 
         payload,
         user_id=user.id
     )
-    return {'message': 'success'}
+    return {'message': 'success', 'data': book}
 
 @app.put('/books/{book_id}')
 def update_book(book_id: int, payload: schema.BookUpdate, db: Session = Depends(get_db)):

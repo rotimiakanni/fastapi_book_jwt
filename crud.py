@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-import models
-import schema
+import book_app.models as models
+import book_app.schema as schema
 
 def create_user(db: Session, user: schema.UserCreate, hashed_password: str):
     db_user = models.User(
@@ -23,7 +23,7 @@ def get_book_by_author(db: Session, author: str):
     return db.query(models.Book).filter(models.Book.author == author).first()
 
 def get_books(db: Session, user_id: int = None, offset: int = 0, limit: int = 10):
-    return db.query(models.Book).filter(models.Book.id == user_id).offset(offset).limit(limit).all()
+    return db.query(models.Book).filter(models.Book.user_id == user_id).offset(offset).limit(limit).all()
 
 def create_book(db: Session, book: schema.BookCreate, user_id: int = None):
     db_book = models.Book(
@@ -53,4 +53,12 @@ def update_book(db: Session, book_id: int, book_payload: schema.BookUpdate):
     db.refresh(book)
 
     return book
+
+def delete_book(db: Session, book_id: int):
+    book = db.query(models.Book).filter(models.Book.id == book_id).first()
+    if book:
+        db.delete(book)
+        db.commit()
+        return True
+    return False
 

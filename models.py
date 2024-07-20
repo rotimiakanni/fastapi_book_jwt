@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
-from database import Base
+from book_app.database import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -26,3 +26,8 @@ class Book(Base):
 
 
     
+# password -> hash password -> save hashed password.
+# password -> verify(password, hashed password)
+
+# password -> verify -> generate token with expiry date -> 
+# token + request -> response 
