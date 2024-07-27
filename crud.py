@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
 import book_app.models as models
 import book_app.schema as schema
+from book_app.logger import get_logger
+
+logger = get_logger(__name__)
 
 def create_user(db: Session, user: schema.UserCreate, hashed_password: str):
     db_user = models.User(
@@ -17,6 +20,7 @@ def get_user_by_username(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
 
 def get_book(db: Session, id: int):
+    logger.info('Querying Book model')
     return db.query(models.Book).filter(models.Book.id == id).first()
 
 def get_book_by_author(db: Session, author: str):
