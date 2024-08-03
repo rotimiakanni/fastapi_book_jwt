@@ -1,10 +1,10 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from book_app.auth import authenticate_user, create_access_token, get_current_user
-import book_app.crud as crud, book_app.schema as schema
-from book_app.database import engine, Base, get_db
-from book_app.auth import pwd_context
+from auth import authenticate_user, create_access_token, get_current_user
+import crud as crud, book_app.schema as schema
+from database import engine, Base, get_db
+from auth import pwd_context
 from typing import Optional
 # import sentry_sdk
 from book_app.logger import get_logger

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api_db:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
+    container_name: api_db
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file: .env
+    depends_on:
+      - api_db

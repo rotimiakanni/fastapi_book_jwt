@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-import book_app.models as models
-import book_app.schema as schema
-from book_app.logger import get_logger
+import models as models
+import schema as schema
+from logger import get_logger
 
 logger = get_logger(__name__)
 
